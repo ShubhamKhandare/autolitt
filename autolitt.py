@@ -1,5 +1,7 @@
 import json
-
+import sys
+import os
+import traceback
 import pyscreenshot as image_grab
 from tuyapy import TuyaApi
 
@@ -25,7 +27,7 @@ def turn_on(device):
 def change_color(device, r, g, b):
     # Manually adjusting for black white and gray
     h, s, v = rgb_to_hsv(r, g, b)
-    if v > 95 or v < 5 or s < 10:
+    if v < 5 or s < 10:
         print("Adjusting from {} to {}".format(str(v),str((210, 4 , 19))))
         h = 210
         s = 4
@@ -89,14 +91,21 @@ if __name__ == '__main__':
             try:
                 # TODO get screensize and set dynamic margin
                 fss = image_grab.grab(bbox=(204, 115, 1162, 653))
-                color_thief = ColorThief(fss)
+                color_thief = ColorThief(fss, is_obj=True)
                 # get the dominant color
-                dominant_color = color_thief.get_color(quality=5)
+                dominant_color = color_thief.get_color(quality=5, ignore_white=True, ignore_black=True)
                 if old_color == dominant_color:
                     continue
                 else:
                     change_color(devices[j], dominant_color[0], dominant_color[1], dominant_color[2])
                     print("Changed colour of " + str(j) + " to " + str(dominant_color))
                     old_color = dominant_color
+            except KeyboardInterrupt:
+                print('OK bye!')
+                try:
+                    sys.exit(0)
+                except SystemExit:
+                    os._exit(0)
             except Exception as e:
                 print("Failed to due to " + repr(e))
+                print(traceback.format_exc())

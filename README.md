@@ -27,9 +27,12 @@ You will also need to alter the config.json file with the following:
 {"username":"example@domain.com","password":"YOURPASS","country_code":"91","application":"smart_life"}
 ```
 
-Inspired from: [Reddit Post](https://www.reddit.com/r/homeautomation/comments/dz677b/heres_how_to_use_wipros_smart_lights_with_ifttt/?utm_source=share&utm_medium=web2x&context=3)
+Inspired from: 
 
-To find the dominant colour I have used https://github.com/fengsp/color-thief-py
+- [Reddit Post](https://www.reddit.com/r/homeautomation/comments/dz677b/heres_how_to_use_wipros_smart_lights_with_ifttt/?utm_source=share&utm_medium=web2x&context=3)
+- [Github Repo](https://github.com/dev-est/tuya_tray)
+
+To find the dominant colour I have used [color-thief-py](https://github.com/gsornsen/color-thief-py)
 
 
 ### Todos
