@@ -85,27 +85,27 @@ if __name__ == '__main__':
     lights = dict(sorted(dict((i.name(), i) for i in device_ids if i.obj_type == 'light').items()))
     devices = {**lights}
     print(devices)
+    devices_list = [*devices.values()]
     old_color = (0, 0, 0)
-    for j in devices.keys():
-        while True:
+    while True:
+        try:
+            # TODO get screensize and set dynamic margin
+            fss = image_grab.grab(bbox=(204, 115, 1162, 653))
+            color_thief = ColorThief(fss, is_obj=True)
+            # get the dominant color
+            dominant_color = color_thief.get_color(quality=5, ignore_white=True, ignore_black=True)
+            if old_color == dominant_color:
+                continue
+            else:
+                change_color(devices_list, dominant_color[0], dominant_color[1], dominant_color[2])
+                print("Changed colour to " + str(dominant_color))
+                old_color = dominant_color
+        except KeyboardInterrupt:
+            print('OK bye!')
             try:
-                # TODO get screensize and set dynamic margin
-                fss = image_grab.grab(bbox=(204, 115, 1162, 653))
-                color_thief = ColorThief(fss, is_obj=True)
-                # get the dominant color
-                dominant_color = color_thief.get_color(quality=5, ignore_white=True, ignore_black=True)
-                if old_color == dominant_color:
-                    continue
-                else:
-                    change_color(devices[j], dominant_color[0], dominant_color[1], dominant_color[2])
-                    print("Changed colour of " + str(j) + " to " + str(dominant_color))
-                    old_color = dominant_color
-            except KeyboardInterrupt:
-                print('OK bye!')
-                try:
-                    sys.exit(0)
-                except SystemExit:
-                    os._exit(0)
-            except Exception as e:
-                print("Failed to due to " + repr(e))
-                print(traceback.format_exc())
+                sys.exit(0)
+            except SystemExit:
+                os._exit(0)
+        except Exception as e:
+            print("Failed to due to " + repr(e))
+            print(traceback.format_exc())
