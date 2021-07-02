@@ -17,6 +17,8 @@ Install the requirements and run the script.
 $ pip3 install -r requirements.txt
 $ python3 autolitt.py
 ```
+Android App link for Smartlife: https://play.google.com/store/apps/details?id=com.tuya.smartlife
+Register from app and link smart bulb.
 
 You will also need to alter the config.json file with the following:
  1. Your Tuya/SmartLife login and password so it looks like this {"username":"example@domain.com","password":"YOURPASS"...}
